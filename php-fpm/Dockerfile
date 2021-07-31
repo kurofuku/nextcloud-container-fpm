@@ -34,4 +34,4 @@ RUN			\
 			# Done
 			echo "Build complete." 
 
-ENTRYPOINT	/entrypoint.sh
+ENTRYPOINT	sh /entrypoint.sh
