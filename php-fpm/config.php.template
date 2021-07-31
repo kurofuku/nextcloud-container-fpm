@@ -1,0 +1,4 @@
+<?php
+$CONFIG = array (
+  'overwrite.cli.url' => 'http://${NGINX_SERVER_NAME}',
+);

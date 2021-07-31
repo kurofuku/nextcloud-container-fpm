@@ -1,27 +1,29 @@
 FROM		debian:latest
 
-ENV			NGINX_USER=www-data \
-			NGINX_GROUP=www-data \
-			NGINX_ROOT=/var/www/html \
-			PHP_VER=7.3 \
-			PHP_SESSION_DIR=/var/lib/php/sessions/ \
-			NEXTCLOUD_VER=21.0.3
+ARG			NGINX_USER
+ARG			NGINX_GROUP
+ARG			NGINX_ROOT
+ARG			NGINX_SERVER_NAME
+ARG			PHP_VER
+ARG			PHP_SESSION_DIR
+ARG			NEXTCLOUD_VER
 
 ADD 		. /php-fpm
 
 RUN			\
-			# Move entrypoint.sh
+			# Move Neccessary files for run
 			mv /php-fpm/entrypoint.sh / && \
 			chmod 775 /entrypoint.sh && \
+			mv /php-fpm/config.php.template / && \
 			# Update to latest
 			apt -y update && \
 			apt -y upgrade && \
 			# Install neccessary packages
-			apt -y install wget php-fpm unzip php-zip php-xml php-mbstring php-gd php-curl php-sqlite3 && \
+			apt -y install wget php-fpm unzip php-zip php-xml php-mbstring php-gd php-curl php-sqlite3 gettext-base && \
 			# Setup php-fpm
-			cat /php-fpm/php-fpm.conf > /etc/php/${PHP_VER}/fpm/php-fpm.conf && \
+			cp /php-fpm/php-fpm.conf.template /etc/php/${PHP_VER}/fpm/php-fpm.conf.template && \
 			mkdir -p /etc/php/${PHP_VER}/fpm/pool.d/ && \
-			cat /php-fpm/pool.d/www.conf > /etc/php/${PHP_VER}/fpm/pool.d/www.conf && \
+			cp /php-fpm/pool.d/www.conf.template /etc/php/${PHP_VER}/fpm/pool.d/www.conf.template && \
 			rm -rf /php-fpm && \
 			# Download nextcloud
 			wget -q https://download.nextcloud.com/server/releases/nextcloud-${NEXTCLOUD_VER}.zip -O /nextcloud-${NEXTCLOUD_VER}.zip && \

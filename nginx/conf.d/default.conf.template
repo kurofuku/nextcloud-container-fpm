@@ -2,9 +2,9 @@ server {
 	listen 80 default_server;
 	listen [::]:80 default_server;
 
-	server_name yasufumi-yokoyama.ml;
+	server_name ${NGINX_SERVER_NAME};
 
-	root /var/www/html/;
+	root ${NGINX_ROOT};
   
 	location = /robots.txt {
 		allow all;
@@ -38,7 +38,7 @@ server {
 		#Avoid sending the security headers twice
 		fastcgi_param modHeadersAvailable true;
 		fastcgi_param front_controller_active true;
-		fastcgi_pass nextcloud:9000;
+		fastcgi_pass unix:/var/run/php${PHP_VER}-fpm.sock;
 		fastcgi_intercept_errors on;
 		fastcgi_request_buffering off;
 	}
