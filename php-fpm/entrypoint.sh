@@ -1,4 +1,4 @@
-#!/bin/sh -x
+#!/bin/sh
 if [ ! -f ${NGINX_ROOT}/index.php ]; then
     cd  /;
     unzip -q /nextcloud-${NEXTCLOUD_VER}.zip;
