@@ -36,6 +36,19 @@ services:
      - ./nextcloud:/var/www/html
      - ./php-fpm/log:/var/log
      - php_socket:/var/run
+    depends_on:
+     - mariadb
+    networks:
+     - proxy-tier
+
+  mariadb:
+    image: linuxserver/mariadb:latest
+    restart: always
+    expose:
+     - "3306"
+    env_file: ./.env
+    volumes:
+     - ./databases:/config/databases
     networks:
      - proxy-tier
 

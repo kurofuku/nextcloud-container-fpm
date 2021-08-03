@@ -12,5 +12,7 @@ fi
 # Replace environment variables to real value
 envsubst '$$PHP_VER' < /etc/php/${PHP_VER}/fpm/php-fpm.conf.template > /etc/php/${PHP_VER}/fpm/php-fpm.conf
 envsubst '$$PHP_VER$$NGINX_USER$$NGINX_GROUP$$PHP_SESSION_DIR' < /etc/php/${PHP_VER}/fpm/pool.d/www.conf.template > /etc/php/${PHP_VER}/fpm/pool.d/www.conf
+# Extend max_execution_time
+sed -i -e "s/max_execution_time = 30/max_execution_time = 180/" /etc/php/${PHP_VER}/fpm/php.ini
 # Run php-fpm
 /usr/sbin/php-fpm${PHP_VER} --nodaemonize --fpm-config /etc/php/${PHP_VER}/fpm/php-fpm.conf

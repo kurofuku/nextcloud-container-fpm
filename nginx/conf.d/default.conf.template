@@ -41,6 +41,7 @@ server {
 		fastcgi_pass unix:/var/run/php${PHP_VER}-fpm.sock;
 		fastcgi_intercept_errors on;
 		fastcgi_request_buffering off;
+		fastcgi_read_timeout 180;
 	}
 
 	location ~ ^/(?:updater|ocs-provider)(?:$|/) {
