@@ -1,4 +1,4 @@
-FROM		debian:latest
+FROM		debian:buster
 
 ARG			NGINX_USER
 ARG			NGINX_GROUP

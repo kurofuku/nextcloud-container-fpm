@@ -1,11 +1,14 @@
 server {
-	listen 80 default_server;
-	listen [::]:80 default_server;
+	server_name ${NGINX_SERVER_NAME} ${NGINX_WWW_SERVER_NAME};
+	listen 80;
+	listen [::]:80;
 
-	server_name ${NGINX_SERVER_NAME};
+	root /var/www/html;
 
-	root ${NGINX_ROOT};
-  
+	location ~ /.well-known {
+		allow all;
+	}
+
 	location = /robots.txt {
 		allow all;
 		log_not_found off;
