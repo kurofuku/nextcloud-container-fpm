@@ -12,7 +12,9 @@ services:
     environment:
       #STAGE: 'production'
       #FORCE_RENEW: 'true'
-      DOMAINS: "$NGINX_SERVER_NAME -> http://nginx-production, $NGINX_WWW_SERVER_NAME -> http://nginx-production"
+      DOMAINS: >-
+       $NGINX_SERVER_NAME -> http://nginx-production,
+       $NGINX_WWW_SERVER_NAME -> http://nginx-production
       SERVER_NAMES_HASH_BUCKET_SIZE: 64
     volumes:
       - https-portal-data:/var/lib/https-portal
@@ -27,7 +29,10 @@ services:
      - ./nginx:/nginx
      - ./nextcloud:/var/www/html
      - php_socket:/var/run
-    command: /bin/sh -c "envsubst '$$NGINX_USER' < /nginx/nginx.conf.template > /etc/nginx/nginx.conf && envsubst '$$PHP_VER$$NGINX_SERVER_NAME$$NGINX_ROOT' < /nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
+    command: >
+     /bin/sh -c "envsubst '$$NGINX_USER' < /nginx/nginx.conf.template > /etc/nginx/nginx.conf && 
+     envsubst '$$PHP_VER$$NGINX_SERVER_NAME$$NGINX_WWW_SERVER_NAME$$NGINX_ROOT' < /nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf && 
+     nginx -g 'daemon off;'"
     links:
      - nextcloud
     networks:
