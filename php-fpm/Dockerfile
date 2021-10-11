@@ -20,6 +20,11 @@ RUN			\
 			apt -y upgrade && \
 			# Install neccessary packages
 			apt -y install wget php-fpm unzip php-zip php-xml php-mbstring php-gd php-curl php-sqlite3 gettext-base && \
+			# Install opcache/apcu
+			docker-php-ext-install opcache bcmath && \
+			pecl install apcu && \
+			echo "extension=apcu.so" > $PHP_INI_DIR/conf.d/apcu.ini && \
+			cp $PHP_INI_DIR/php.ini-production $PHP_INI_DIR/php.ini && \
 			# Setup php-fpm
 			cp /php-fpm/php-fpm.conf.template /etc/php/${PHP_VER}/fpm/php-fpm.conf.template && \
 			mkdir -p /etc/php/${PHP_VER}/fpm/pool.d/ && \
