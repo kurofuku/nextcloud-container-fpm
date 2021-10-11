@@ -27,7 +27,6 @@ services:
        - NGINX_GROUP=$NGINX_GROUP
        - NGINX_ROOT=$NGINX_ROOT
        - NGINX_SERVER_NAME=$NGINX_SERVER_NAME
-       - PHP_VER=$PHP_VER
        - PHP_SESSION_DIR=$PHP_SESSION_DIR
        - NEXTCLOUD_VER=$NEXTCLOUD_VER
     env_file: ./.env

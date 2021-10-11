@@ -1,14 +1,13 @@
-FROM		debian:buster
+FROM		php:fpm-buster
 
 ARG			NGINX_USER
 ARG			NGINX_GROUP
 ARG			NGINX_ROOT
 ARG			NGINX_SERVER_NAME
-ARG			PHP_VER
 ARG			PHP_SESSION_DIR
 ARG			NEXTCLOUD_VER
 
-ADD 		. /php-fpm
+ADD			. /php-fpm
 
 RUN			\
 			# Move Neccessary files for run
@@ -19,25 +18,23 @@ RUN			\
 			apt -y update && \
 			apt -y upgrade && \
 			# Install neccessary packages
-			apt -y install wget php-fpm unzip php-zip php-xml php-mbstring php-gd php-curl php-sqlite3 gettext-base && \
+			apt -y install wget gettext-base && \
+			# Install packages for nextcloud
+			apt -y install libzip-dev libxml2-dev libonig-dev libpng-dev libcurl4-openssl-dev && \
+			docker-php-ext-install zip xml mbstring gd curl && \
+			docker-php-ext-enable zip xml mbstring gd curl && \
 			# Install opcache/apcu
 			docker-php-ext-install opcache bcmath && \
+			docker-php-ext-enable opcache bcmath && \
 			pecl install apcu && \
-			echo "extension=apcu.so" > $PHP_INI_DIR/conf.d/apcu.ini && \
-			cp $PHP_INI_DIR/php.ini-production $PHP_INI_DIR/php.ini && \
-			# Setup php-fpm
-			cp /php-fpm/php-fpm.conf.template /etc/php/${PHP_VER}/fpm/php-fpm.conf.template && \
-			mkdir -p /etc/php/${PHP_VER}/fpm/pool.d/ && \
-			cp /php-fpm/pool.d/www.conf.template /etc/php/${PHP_VER}/fpm/pool.d/www.conf.template && \
-			rm -rf /php-fpm && \
+			echo "extension=apcu.so" > ${PHP_INI_DIR}/conf.d/apcu.ini && \
+			ln -s ${PHP_INI_DIR}/php.ini-production ${PHP_INI_DIR}/php.ini && \
 			# Download nextcloud
 			wget -q https://download.nextcloud.com/server/releases/nextcloud-${NEXTCLOUD_VER}.zip -O /nextcloud-${NEXTCLOUD_VER}.zip && \
 			# Prepare PHP session directory
 			mkdir -p ${PHP_SESSION_DIR} && \
 			chown ${NGINX_USER}:${NGINX_USER} ${PHP_SESSION_DIR} && \
 			chmod 770 ${PHP_SESSION_DIR} && \
-			# Prepare directory for pid file
-			mkdir -p /run/php && \
 			# Done
 			echo "Build complete." 
 
