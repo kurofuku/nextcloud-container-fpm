@@ -2,29 +2,12 @@ version: '3.1'
 
 services:
 
-  https-portal:
-    image: steveltn/https-portal:latest
-    ports:
-      - '80:80'
-      - '443:443'
-    links:
-     - nginx-production
-    environment:
-      #STAGE: 'production'
-      #FORCE_RENEW: 'true'
-      DOMAINS: >-
-       $NGINX_SERVER_NAME -> http://nginx-production,
-       $NGINX_WWW_SERVER_NAME -> http://nginx-production
-      SERVER_NAMES_HASH_BUCKET_SIZE: 64
-    volumes:
-      - https-portal-data:/var/lib/https-portal
-    networks:
-     - proxy-tier
-
-  nginx-production:
+  nginx:
     image: nginx
     restart: always
     env_file: ./.env
+    ports:
+     - "8080:80"
     volumes:
      - ./nginx:/nginx
      - ./nextcloud:/var/www/html
@@ -35,8 +18,6 @@ services:
      nginx -g 'daemon off;'"
     links:
      - nextcloud
-    networks:
-     - proxy-tier
 
   nextcloud:
     build:
@@ -54,25 +35,6 @@ services:
     volumes:
      - ./nextcloud:/var/www/html
      - php_socket:/var/run
-    links:
-     - mariadb
-    networks:
-     - proxy-tier
-
-  mariadb:
-    image: linuxserver/mariadb:latest
-    restart: always
-    expose:
-     - "3306"
-    env_file: ./.env
-    volumes:
-     - ./databases:/config/databases
-    networks:
-     - proxy-tier
-
-networks:
-  proxy-tier:
 
 volumes:
   php_socket:
-  https-portal-data:

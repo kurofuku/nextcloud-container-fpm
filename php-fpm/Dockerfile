@@ -19,7 +19,7 @@ RUN			\
 			apt -y update && \
 			apt -y upgrade && \
 			# Install neccessary packages
-			apt -y install wget php-fpm unzip php-zip php-xml php-mbstring php-gd php-curl php-mysql gettext-base && \
+			apt -y install wget php-fpm unzip php-zip php-xml php-mbstring php-gd php-curl php-sqlite3 gettext-base && \
 			# Setup php-fpm
 			cp /php-fpm/php-fpm.conf.template /etc/php/${PHP_VER}/fpm/php-fpm.conf.template && \
 			mkdir -p /etc/php/${PHP_VER}/fpm/pool.d/ && \
