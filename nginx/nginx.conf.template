@@ -23,5 +23,7 @@ http {
 
 	keepalive_timeout 65;
 
+	fastcgi_cache_path /var/cache/nginx/fastcgi_cache levels=1:2 keys_zone=wpcache:30m max_size=512M inactive=600m;
+
 	include /etc/nginx/conf.d/*.conf;
 }

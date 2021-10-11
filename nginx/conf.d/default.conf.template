@@ -45,6 +45,29 @@ server {
 		fastcgi_intercept_errors on;
 		fastcgi_request_buffering off;
 		fastcgi_read_timeout 180;
+		fastcgi_cache wpcache;
+		fastcgi_cache_key "$request_method:$scheme://$host$request_uri";
+		fastcgi_cache_valid  200 60m;
+
+		if ($request_method = POST) {
+			set $do_not_cache 1;
+		}
+
+		if ($query_string != "") {
+			set $do_not_cache 1;
+		}
+
+		if ($http_cookie ~* "comment_author|wordpress_[a-f0-9]+|wp-postpass|wordpress_no_cache|wordpress_logged_in") {
+			set $do_not_cache 1;
+		}
+
+		if ($request_uri ~* "(/wp-admin/|/xmlrpc.php|/wp-(app|cron|login|register|mail).php|wp-.*.php|/feed/|index.php|wp-comments-popup.php|wp-links-opml.php|wp-locations.php|sitemap(_index)?.xml|[a-z0-9_-]+-sitemap([0-9]+)?.xml)") {
+			set $do_not_cache 1;
+		}
+
+		fastcgi_no_cache     $do_not_cache;
+		fastcgi_cache_bypass $do_not_cache;
+		add_header X-F-Cache $upstream_cache_status;
 	}
 
 	location ~ ^/(?:updater|ocs-provider)(?:$|/) {
@@ -72,5 +95,11 @@ server {
 		try_files $uri /index.php$uri$is_args$args;
 		# Optional: Don't log access to other assets
 		access_log off;
+		expires 60d;
 	}
+
+	open_file_cache max=100000 inactive=20s;
+	open_file_cache_valid 30s;
+	open_file_cache_min_uses 2;
+	open_file_cache_errors on;
 }
