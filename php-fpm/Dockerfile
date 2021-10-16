@@ -20,9 +20,11 @@ RUN			\
 			# Install neccessary packages
 			apt -y install wget gettext-base && \
 			# Install packages for nextcloud
-			apt -y install libzip-dev libxml2-dev libonig-dev libpng-dev libcurl4-openssl-dev && \
-			docker-php-ext-install zip xml mbstring gd curl && \
-			docker-php-ext-enable zip xml mbstring gd curl && \
+			apt -y install libzip-dev libxml2-dev libonig-dev libpng-dev libcurl4-openssl-dev libfreetype6-dev libjpeg-dev libwebp-dev && \
+			docker-php-ext-install zip xml mbstring curl pdo_mysql && \
+			docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp && \
+			docker-php-ext-install -j$(nproc) gd && \
+			docker-php-ext-enable zip xml mbstring gd curl pdo_mysql && \
 			# Install opcache/apcu
 			docker-php-ext-install opcache bcmath && \
 			docker-php-ext-enable opcache bcmath && \
