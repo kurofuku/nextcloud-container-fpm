@@ -46,7 +46,7 @@ services:
    env_file: ./.env
    volumes:
     - ./db/conf.d:/etc/mysql/conf.d
-    - /media/nextcloud-container-fpm/mysql:/var/lib/mysql
+    - ./mysql:/var/lib/mysql
     - nextcloud_var_run:/var/run
 
 volumes:
