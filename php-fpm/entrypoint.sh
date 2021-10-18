@@ -30,6 +30,12 @@ php_value[opcache.file_cache] = /var/lib/php/opcache
 php_value[session.save_handler] = files
 php_value[session.save_path] = /${PHP_SESSION_DIR}
 ;php_value[soap.wsdl_cache_dir] = /var/lib/php/wsdlcache
+
+pm.max_children = 50
+pm.start_servers = 20
+pm.min_spare_servers = 20
+pm.max_spare_servers = 40
+
 EOF
 # Extend max_execution_time
 sed -i -e "s/max_execution_time = 30/max_execution_time = 180/" ${PHP_INI_DIR}/php.ini
