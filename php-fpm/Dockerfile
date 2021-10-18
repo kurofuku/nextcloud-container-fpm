@@ -30,6 +30,8 @@ RUN			\
 			docker-php-ext-enable opcache bcmath && \
 			pecl install apcu && \
 			echo "extension=apcu.so" > ${PHP_INI_DIR}/conf.d/apcu.ini && \
+			echo "apc.enable = 1" >> ${PHP_INI_DIR}/conf.d/apcu.ini && \
+			echo "apc.enable_cli = 1" >> ${PHP_INI_DIR}/conf.d/apcu.ini && \
 			ln -s ${PHP_INI_DIR}/php.ini-production ${PHP_INI_DIR}/php.ini && \
 			# Download nextcloud
 			wget -q https://download.nextcloud.com/server/releases/nextcloud-${NEXTCLOUD_VER}.zip -O /nextcloud-${NEXTCLOUD_VER}.zip && \
