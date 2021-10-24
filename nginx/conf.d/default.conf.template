@@ -41,6 +41,7 @@ server {
 		#Avoid sending the security headers twice
 		fastcgi_param modHeadersAvailable true;
 		fastcgi_param front_controller_active true;
+		fastcgi_param PHP_VALUE "auto_prepend_file=/var/www/prepend.php";
 		fastcgi_pass unix:/var/run/php-fpm.sock;
 		fastcgi_intercept_errors on;
 		fastcgi_request_buffering off;

@@ -39,5 +39,8 @@ pm.max_spare_servers = 40
 EOF
 # Extend max_execution_time
 sed -i -e "s/max_execution_time = 30/max_execution_time = 180/" ${PHP_INI_DIR}/php.ini
+# auto_prepend_file
+echo '<?php setlocale(LC_CTYPE, "ja_JP.UTF-8");' > /var/www/prepend.php
+chown www-data /var/www/prepend.php
 # Run php-fpm
 /usr/local/sbin/php-fpm --nodaemonize

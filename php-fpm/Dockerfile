@@ -33,6 +33,10 @@ RUN			\
 			echo "apc.enable = 1" >> ${PHP_INI_DIR}/conf.d/apcu.ini && \
 			echo "apc.enable_cli = 1" >> ${PHP_INI_DIR}/conf.d/apcu.ini && \
 			ln -s ${PHP_INI_DIR}/php.ini-production ${PHP_INI_DIR}/php.ini && \
+			# Setup locale
+			apt -y install locales && \
+			echo "ja_JP UTF-8" > /etc/locale.gen && \
+			locale-gen && \
 			# Download nextcloud
 			wget -q https://download.nextcloud.com/server/releases/nextcloud-${NEXTCLOUD_VER}.zip -O /nextcloud-${NEXTCLOUD_VER}.zip && \
 			# Prepare PHP session directory
