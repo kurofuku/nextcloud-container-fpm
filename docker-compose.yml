@@ -10,7 +10,8 @@ services:
      - "8080:80"
     volumes:
      - ./nginx:/nginx
-     - ./nextcloud:/var/www/html
+     - /media/nextcloud-container-fpm/nextcloud:/var/www/html
+     - /media/nextcloud-container-fpm/nextcloud_data:/var/www/nextcloud_data
      - nextcloud_var_run:/var/run
     tmpfs:
      - /var/cache/nginx/fastcgi_cache
@@ -35,7 +36,8 @@ services:
     env_file: ./.env
     restart: always
     volumes:
-     - ./nextcloud:/var/www/html
+     - /media/nextcloud-container-fpm/nextcloud:/var/www/html
+     - /media/nextcloud-container-fpm/nextcloud_data:/var/www/nextcloud_data
      - nextcloud_var_run:/var/run
     links:
      - db
@@ -46,7 +48,7 @@ services:
    env_file: ./.env
    volumes:
     - ./db/conf.d:/etc/mysql/conf.d
-    - ./mysql:/var/lib/mysql
+    - /media/nextcloud-container-fpm/mysql:/var/lib/mysql
     - nextcloud_var_run:/var/run
 
 volumes:
