@@ -31,10 +31,12 @@ php_value[session.save_handler] = files
 php_value[session.save_path] = /${PHP_SESSION_DIR}
 ;php_value[soap.wsdl_cache_dir] = /var/lib/php/wsdlcache
 
-pm.max_children = 50
-pm.start_servers = 20
-pm.min_spare_servers = 20
-pm.max_spare_servers = 40
+pm.max_children = 15
+pm.start_servers = 5
+pm.min_spare_servers = 5
+pm.max_spare_servers = 10
+
+php_admin_value[memory_limit] = 512M
 
 EOF
 # Extend max_execution_time
