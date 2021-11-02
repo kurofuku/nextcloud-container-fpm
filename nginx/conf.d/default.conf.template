@@ -3,6 +3,8 @@ server {
 	listen 80;
 	listen [::]:80;
 
+	fastcgi_hide_header X-Powered-By;
+
 	root ${NGINX_ROOT};
 
 	location ~ /.well-known {
