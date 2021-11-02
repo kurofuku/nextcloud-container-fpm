@@ -20,7 +20,7 @@ RUN			\
 			# Install neccessary packages
 			apt -y install wget gettext-base && \
 			# Install packages for nextcloud
-			apt -y install libzip-dev libxml2-dev libonig-dev libpng-dev libfreetype6-dev libjpeg-dev libwebp-dev libmagickwand-dev ffmpeg imagemagick ghostscript libcurl4-openssl-dev libgmp-dev && \
+			apt -y install iproute2 libzip-dev libxml2-dev libonig-dev libpng-dev libfreetype6-dev libjpeg-dev libwebp-dev libmagickwand-dev ffmpeg imagemagick ghostscript libcurl4-openssl-dev libgmp-dev && \
 			docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp && \
 			docker-php-ext-install zip xml mbstring curl gd pdo_mysql intl gmp && \
 			docker-php-ext-enable zip xml mbstring curl gd pdo_mysql intl gmp && \
