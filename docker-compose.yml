@@ -3,7 +3,8 @@ version: '3.1'
 services:
 
   nginx:
-    image: nginx
+    build:
+      context: nginx
     restart: always
     env_file: ./.env
     ports:
