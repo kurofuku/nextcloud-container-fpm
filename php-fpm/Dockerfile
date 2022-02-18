@@ -1,4 +1,4 @@
-FROM		php:fpm-buster
+FROM		php:8.0.15-fpm-buster
 
 ARG			NGINX_USER
 ARG			NGINX_GROUP
@@ -22,8 +22,8 @@ RUN			\
 			# Install packages for nextcloud
 			apt -y install unzip iproute2 libzip-dev libxml2-dev libonig-dev libpng-dev libfreetype6-dev libjpeg-dev libwebp-dev libmagickwand-dev ffmpeg imagemagick ghostscript libcurl4-openssl-dev libgmp-dev && \
 			docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp && \
-			docker-php-ext-install zip xml mbstring curl gd pdo_mysql intl gmp && \
-			docker-php-ext-enable zip xml mbstring curl gd pdo_mysql intl gmp && \
+			docker-php-ext-install zip xml mbstring curl gd pdo_mysql intl gmp exif && \
+			docker-php-ext-enable zip xml mbstring curl gd pdo_mysql intl gmp exif && \
 			# Install Imagick
 			pecl install imagick && \
 			echo "extension=imagick.so" > ${PHP_INI_DIR}/conf.d/imagick.ini && \
