@@ -20,6 +20,7 @@ services:
      /bin/sh -c "envsubst '$$NGINX_USER' < /nginx/nginx.conf.template > /etc/nginx/nginx.conf && 
      envsubst '$$NGINX_SERVER_NAME$$NGINX_WWW_SERVER_NAME$$NGINX_ROOT' < /nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf &&
      echo 'SecRuleRemoveById 200002'        >  /etc/modsecurity.d/owasp-crs/rules/zz-nextcloud.conf &&
+     echo 'SecRuleRemoveById 200003'        >> /etc/modsecurity.d/owasp-crs/rules/zz-nextcloud.conf &&
      echo 'SecRuleRemoveById 911100'        >> /etc/modsecurity.d/owasp-crs/rules/zz-nextcloud.conf &&
      echo 'SecRuleRemoveById 920420'        >> /etc/modsecurity.d/owasp-crs/rules/zz-nextcloud.conf &&
      echo 'SecRuleRemoveById 921110'        >> /etc/modsecurity.d/owasp-crs/rules/zz-nextcloud.conf &&
