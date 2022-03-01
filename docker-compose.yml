@@ -52,8 +52,22 @@ services:
      - collabora
      - db
 
+  cron:
+    image: rcdailey/nextcloud-cronjob
+    restart: always
+    links:
+     - nextcloud
+    volumes:
+     - /var/run/docker.sock:/var/run/docker.sock:ro
+     - /etc/localtime:/etc/localtime:ro
+    environment:
+     - NEXTCLOUD_CONTAINER_NAME=nextcloud
+     - NEXTCLOUD_PROJECT_NAME=nextcloud-container-fpm
+
   collabora:
     image: collabora/code
+    restart: always
+    env_file: ./.env
     cap_add:
      - SYS_ADMIN
     devices:
