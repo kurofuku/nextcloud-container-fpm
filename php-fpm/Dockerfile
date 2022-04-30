@@ -24,6 +24,9 @@ RUN			\
 			docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp && \
 			docker-php-ext-install zip xml mbstring curl gd pdo_mysql intl gmp exif && \
 			docker-php-ext-enable zip xml mbstring curl gd pdo_mysql intl gmp exif && \
+			# Install library for Gmail
+			apt -y install python3-pip && \
+			pip3 install google-api-python-client google-auth-oauthlib && \
 			# Install Imagick
 			pecl install imagick && \
 			echo "extension=imagick.so" > ${PHP_INI_DIR}/conf.d/imagick.ini && \
