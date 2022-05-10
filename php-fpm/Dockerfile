@@ -1,4 +1,4 @@
-FROM		php:8.0.15-fpm-buster
+FROM		php:8.1-fpm-buster
 
 ARG			NGINX_USER
 ARG			NGINX_GROUP
