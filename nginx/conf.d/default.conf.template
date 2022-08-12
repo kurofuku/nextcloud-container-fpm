@@ -18,8 +18,7 @@ server {
 	}
 
 	# set max upload size
-	client_max_body_size 128M;
-	fastcgi_buffers 64 4K;
+	client_max_body_size 512M;
 
 	location ^~ /.well-known {
 
