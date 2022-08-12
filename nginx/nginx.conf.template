@@ -21,5 +21,9 @@ http {
 
 	fastcgi_cache_path /var/cache/nginx/fastcgi_cache levels=1:2 keys_zone=wpcache:30m max_size=512M inactive=600m;
 
+	fastcgi_buffers 8 128K;
+	fastcgi_buffer_size 128k;
+	fastcgi_busy_buffers_size 128k;
+
 	include /etc/nginx/conf.d/*.conf;
 }
