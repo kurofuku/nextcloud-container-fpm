@@ -49,7 +49,6 @@ services:
      - /media/nextcloud-container-fpm/nextcloud_data:/var/www/nextcloud_data
      - nextcloud_var_run:/var/run
     links:
-     - collabora
      - db
 
   cron:
@@ -63,23 +62,6 @@ services:
     environment:
      - NEXTCLOUD_CONTAINER_NAME=nextcloud
      - NEXTCLOUD_PROJECT_NAME=nextcloud-container-fpm
-
-  collabora:
-    image: collabora/code
-    restart: always
-    env_file: ./.env
-    cap_add:
-     - SYS_ADMIN
-    devices:
-     - "/dev/fuse:/dev/fuse"
-    ports:
-     - "9980:9980"
-    environment:
-     - username=$COLLABORA_USER_NAME
-     - password=$COLLABORA_PASSWORD
-     - domain=$COLLABORA_DOMAIN
-     - server_name=$COLLABORA_SERVER_NAME
-     - extra_params=--o:ssl.enable=false --o:ssl.termination=true
 
   db:
     image: jsurf/rpi-mariadb:latest
