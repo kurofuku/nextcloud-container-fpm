@@ -27,7 +27,7 @@ services:
      echo 'SecRuleRemoveById 941100'        >> /etc/modsecurity.d/owasp-crs/rules/zz-nextcloud.conf &&
      echo 'SecRuleRemoveById 941130'        >> /etc/modsecurity.d/owasp-crs/rules/zz-nextcloud.conf &&
      echo 'SecRuleRemoveById 949110'        >> /etc/modsecurity.d/owasp-crs/rules/zz-nextcloud.conf &&
-     echo 'SecRequestBodyLimit 268435456'   >> /etc/modsecurity.d/owasp-crs/rules/zz-nextcloud.conf &&
+     echo 'SecRequestBodyLimit 536870912'   >> /etc/modsecurity.d/owasp-crs/rules/zz-nextcloud.conf &&
      nginx -g 'daemon off;'"
     links:
      - nextcloud
