@@ -41,8 +41,11 @@ EOF
 # Extend max_execution_time
 sed -i -e "s/max_execution_time = 30/max_execution_time = 360/" ${PHP_INI_DIR}/php.ini
 # Expand maximum uploadable file size
+sed -i -e "s/memory_limit = 128M/memory_limit = 512M/" ${PHP_INI_DIR}/php.ini
 sed -i -e "s/upload_max_filesize = 2M/upload_max_filesize = 512M/" ${PHP_INI_DIR}/php.ini
 sed -i -e "s/post_max_size = 8M/post_max_size = 512M/" ${PHP_INI_DIR}/php.ini
+# Change cache rule
+sed -i -e "s/session.cache_limiter = nocache/session.cache_limiter = public/" ${PHP_INI_DIR}/php.ini
 # auto_prepend_file
 echo '<?php setlocale(LC_CTYPE, "ja_JP.UTF-8");' > /var/www/prepend.php
 chown www-data /var/www/prepend.php
