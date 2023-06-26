@@ -68,7 +68,7 @@ services:
      echo '' >> ${PHP_INI_DIR}-fpm.d/zz-docker.conf &&
      echo 'php_value[opcache.interned_strings_buffer] = 32' >> ${PHP_INI_DIR}-fpm.d/zz-docker.conf &&
      echo 'php_value[opcache.max_accelerated_files] = 10000' >> ${PHP_INI_DIR}-fpm.d/zz-docker.conf &&
-     echo 'php_value[opcache.memory_consumption] = 128' >> ${PHP_INI_DIR}-fpm.d/zz-docker.conf &&
+     echo 'php_value[opcache.memory_consumption] = 512' >> ${PHP_INI_DIR}-fpm.d/zz-docker.conf &&
      echo 'php_value[opcache.save_comments] = 1' >> ${PHP_INI_DIR}-fpm.d/zz-docker.conf &&
      echo 'php_value[opcache.revalidate_freq] = 1' >> ${PHP_INI_DIR}-fpm.d/zz-docker.conf &&
      echo 'php_value[opcache.file_cache] = /var/lib/php/opcache' >> ${PHP_INI_DIR}-fpm.d/zz-docker.conf &&
