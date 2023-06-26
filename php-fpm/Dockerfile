@@ -35,9 +35,6 @@ RUN			\
 			docker-php-ext-enable opcache bcmath && \
 			pecl install apcu && \
 			echo "extension=apcu.so" > ${PHP_INI_DIR}/conf.d/apcu.ini && \
-			echo "apc.enable = 1" >> ${PHP_INI_DIR}/conf.d/apcu.ini && \
-			echo "apc.enable_cli = 1" >> ${PHP_INI_DIR}/conf.d/apcu.ini && \
-			echo "opcache.interned_strings_buffer = 32" >> ${PHP_INI_DIR}/conf.d/opcache.ini && \
 			ln -s ${PHP_INI_DIR}/php.ini-production ${PHP_INI_DIR}/php.ini && \
 			# Setup locale
 			apt -y install locales && \
