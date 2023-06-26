@@ -66,7 +66,7 @@ services:
      echo 'listen.group = ${NGINX_GROUP}' >> ${PHP_INI_DIR}-fpm.d/zz-docker.conf &&
      echo 'listen.mode = 660' >> ${PHP_INI_DIR}-fpm.d/zz-docker.conf &&
      echo '' >> ${PHP_INI_DIR}-fpm.d/zz-docker.conf &&
-     echo 'php_value[opcache.interned_strings_buffer] = 8' >> ${PHP_INI_DIR}-fpm.d/zz-docker.conf &&
+     echo 'php_value[opcache.interned_strings_buffer] = 32' >> ${PHP_INI_DIR}-fpm.d/zz-docker.conf &&
      echo 'php_value[opcache.max_accelerated_files] = 10000' >> ${PHP_INI_DIR}-fpm.d/zz-docker.conf &&
      echo 'php_value[opcache.memory_consumption] = 128' >> ${PHP_INI_DIR}-fpm.d/zz-docker.conf &&
      echo 'php_value[opcache.save_comments] = 1' >> ${PHP_INI_DIR}-fpm.d/zz-docker.conf &&
