@@ -35,13 +35,14 @@ RUN			\
 			docker-php-ext-enable opcache bcmath && \
 			pecl install apcu && \
 			echo "extension=apcu.so" > ${PHP_INI_DIR}/conf.d/apcu.ini && \
-			echo "apc.enable = 1" >> ${PHP_INI_DIR}/conf.d/apcu.ini && \
-			echo "apc.enable_cli = 1" >> ${PHP_INI_DIR}/conf.d/apcu.ini && \
 			ln -s ${PHP_INI_DIR}/php.ini-production ${PHP_INI_DIR}/php.ini && \
 			# Setup locale
 			apt -y install locales && \
-			echo "ja_JP UTF-8" > /etc/locale.gen && \
+			echo "en_US UTF-8" > /etc/locale.gen && \
 			locale-gen && \
+			# auto_prepend_file
+			echo '<?php setlocale(LC_CTYPE, "en_US.UTF-8");' > /var/www/prepend.php && \
+			chown www-data /var/www/prepend.php && \
 			# Download nextcloud
 			wget -q https://download.nextcloud.com/server/releases/nextcloud-${NEXTCLOUD_VER}.zip -O /nextcloud-${NEXTCLOUD_VER}.zip && \
 			# Prepare PHP session directory
@@ -49,6 +50,4 @@ RUN			\
 			chown ${NGINX_USER}:${NGINX_USER} ${PHP_SESSION_DIR} && \
 			chmod 770 ${PHP_SESSION_DIR} && \
 			# Done
-			echo "Build complete." 
-
-ENTRYPOINT	sh /entrypoint.sh
+			echo "Build complete."

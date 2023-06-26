@@ -41,6 +41,7 @@ services:
        - NGINX_ROOT=$NGINX_ROOT
        - NGINX_SERVER_NAME=$NGINX_SERVER_NAME
        - PHP_SESSION_DIR=$PHP_SESSION_DIR
+       - PHP_INI_DIR=$PHP_INI_DIR
        - NEXTCLOUD_VER=$NEXTCLOUD_VER
     env_file: ./.env
     restart: always
@@ -48,6 +49,38 @@ services:
      - /media/nextcloud-container-fpm/nextcloud:/var/www/html
      - /media/nextcloud-container-fpm/nextcloud_data:/var/www/nextcloud_data
      - nextcloud_var_run:/var/run
+    command: >
+     /bin/sh -c "echo 'apc.enable = 1' >> ${PHP_INI_DIR}/conf.d/apcu.ini &&
+     echo 'apc.enable_cli = 1' >> ${PHP_INI_DIR}/conf.d/apcu.ini &&
+     sed -i -e 's/max_execution_time = 30/max_execution_time = 360/' ${PHP_INI_DIR}/php.ini &&
+     sed -i -e 's/memory_limit = 128M/memory_limit = 512M/' ${PHP_INI_DIR}/php.ini &&
+     sed -i -e 's/upload_max_filesize = 2M/upload_max_filesize = 512M/' ${PHP_INI_DIR}/php.ini &&
+     sed -i -e 's/post_max_size = 8M/post_max_size = 512M/' ${PHP_INI_DIR}/php.ini &&
+     sed -i -e 's/session.cache_limiter = nocache/session.cache_limiter = public/' ${PHP_INI_DIR}/php.ini &&
+     echo '[www]' > ${PHP_INI_DIR}-fpm.d/zz-docker.conf &&
+     echo 'user = ${NGINX_USER}' >> ${PHP_INI_DIR}-fpm.d/zz-docker.conf &&
+     echo 'group = ${NGINX_GROUP}' >> ${PHP_INI_DIR}-fpm.d/zz-docker.conf &&
+     echo '' >> ${PHP_INI_DIR}-fpm.d/zz-docker.conf &&
+     echo 'listen = /var/run/php-fpm.sock' >> ${PHP_INI_DIR}-fpm.d/zz-docker.conf &&
+     echo 'listen.owner = ${NGINX_USER}' >> ${PHP_INI_DIR}-fpm.d/zz-docker.conf &&
+     echo 'listen.group = ${NGINX_GROUP}' >> ${PHP_INI_DIR}-fpm.d/zz-docker.conf &&
+     echo 'listen.mode = 660' >> ${PHP_INI_DIR}-fpm.d/zz-docker.conf &&
+     echo '' >> ${PHP_INI_DIR}-fpm.d/zz-docker.conf &&
+     echo 'php_value[opcache.interned_strings_buffer] = 8' >> ${PHP_INI_DIR}-fpm.d/zz-docker.conf &&
+     echo 'php_value[opcache.max_accelerated_files] = 10000' >> ${PHP_INI_DIR}-fpm.d/zz-docker.conf &&
+     echo 'php_value[opcache.memory_consumption] = 128' >> ${PHP_INI_DIR}-fpm.d/zz-docker.conf &&
+     echo 'php_value[opcache.save_comments] = 1' >> ${PHP_INI_DIR}-fpm.d/zz-docker.conf &&
+     echo 'php_value[opcache.revalidate_freq] = 1' >> ${PHP_INI_DIR}-fpm.d/zz-docker.conf &&
+     echo 'php_value[opcache.file_cache] = /var/lib/php/opcache' >> ${PHP_INI_DIR}-fpm.d/zz-docker.conf &&
+     echo 'php_value[session.save_handler] = files' >> ${PHP_INI_DIR}-fpm.d/zz-docker.conf &&
+     echo 'php_value[session.save_path] = /${PHP_SESSION_DIR}' >> ${PHP_INI_DIR}-fpm.d/zz-docker.conf &&
+     echo '' >> ${PHP_INI_DIR}-fpm.d/zz-docker.conf &&
+     echo 'pm = static' >> ${PHP_INI_DIR}-fpm.d/zz-docker.conf &&
+     echo 'pm.max_children = 8' >> ${PHP_INI_DIR}-fpm.d/zz-docker.conf &&
+     echo 'pm.max_requests = 500' >> ${PHP_INI_DIR}-fpm.d/zz-docker.conf &&
+     echo '' >> ${PHP_INI_DIR}-fpm.d/zz-docker.conf &&
+     echo 'php_admin_value[memory_limit] = 512M' >> ${PHP_INI_DIR}-fpm.d/zz-docker.conf &&
+     sh /entrypoint.sh"
     links:
      - db
 
