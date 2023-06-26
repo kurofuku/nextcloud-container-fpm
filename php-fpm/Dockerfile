@@ -22,8 +22,8 @@ RUN			\
 			# Install packages for nextcloud
 			apt -y install unzip iproute2 libzip-dev libxml2-dev libonig-dev libpng-dev libfreetype6-dev libjpeg-dev libwebp-dev libmagickwand-dev ffmpeg imagemagick ghostscript libcurl4-openssl-dev libgmp-dev fuse && \
 			docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp && \
-			docker-php-ext-install zip xml mbstring curl gd pdo_mysql intl gmp exif && \
-			docker-php-ext-enable zip xml mbstring curl gd pdo_mysql intl gmp exif && \
+			docker-php-ext-install zip xml mbstring curl gd pdo_mysql intl gmp exif sysvsem && \
+			docker-php-ext-enable zip xml mbstring curl gd pdo_mysql intl gmp exif sysvsem && \
 			# Install library for Gmail
 			apt -y install python3-pip && \
 			pip3 install google-api-python-client google-auth-oauthlib && \
@@ -35,6 +35,9 @@ RUN			\
 			docker-php-ext-enable opcache bcmath && \
 			pecl install apcu && \
 			echo "extension=apcu.so" > ${PHP_INI_DIR}/conf.d/apcu.ini && \
+			echo "apc.enable = 1" >> ${PHP_INI_DIR}/conf.d/apcu.ini && \
+			echo "apc.enable_cli = 1" >> ${PHP_INI_DIR}/conf.d/apcu.ini && \
+			echo "opcache.interned_strings_buffer = 32" >> ${PHP_INI_DIR}/conf.d/opcache.ini && \
 			ln -s ${PHP_INI_DIR}/php.ini-production ${PHP_INI_DIR}/php.ini && \
 			# Setup locale
 			apt -y install locales && \
