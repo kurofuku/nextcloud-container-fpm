@@ -72,6 +72,7 @@ services:
      echo 'php_value[opcache.save_comments] = 1' >> ${PHP_INI_DIR}-fpm.d/zz-docker.conf &&
      echo 'php_value[opcache.revalidate_freq] = 1' >> ${PHP_INI_DIR}-fpm.d/zz-docker.conf &&
      echo 'php_value[opcache.file_cache] = /var/lib/php/opcache' >> ${PHP_INI_DIR}-fpm.d/zz-docker.conf &&
+     echo 'php_value[opcache.interned_strings_buffer] = 64' >> ${PHP_INI_DIR}-fpm.d/zz-docker.conf &&
      echo 'php_value[session.save_handler] = files' >> ${PHP_INI_DIR}-fpm.d/zz-docker.conf &&
      echo 'php_value[session.save_path] = /${PHP_SESSION_DIR}' >> ${PHP_INI_DIR}-fpm.d/zz-docker.conf &&
      echo '' >> ${PHP_INI_DIR}-fpm.d/zz-docker.conf &&
