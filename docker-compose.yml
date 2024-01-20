@@ -11,8 +11,6 @@ services:
     volumes:
      - ./nginx:/nginx
      - ./nginx/conf.d/modsecurity.conf:/etc/nginx/conf.d/modsecurity.conf
-     - ./modsecurity.d/setup.conf:/etc/modsecurity.d/setup.conf
-     - ./modsecurity.d/modsecurity-override.conf:/etc/modsecurity.d/modsecurity-override.conf
      - /media/nextcloud-container-fpm/nextcloud:/var/www/html
      - /media/nextcloud-container-fpm/nextcloud_data:/var/www/nextcloud_data
      - nextcloud_var_run:/var/run
