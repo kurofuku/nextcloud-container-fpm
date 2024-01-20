@@ -31,6 +31,8 @@ services:
      echo 'SecRuleRemoveById 941130'        >> /etc/modsecurity.d/owasp-crs/rules/zz-nextcloud.conf &&
      echo 'SecRuleRemoveById 949110'        >> /etc/modsecurity.d/owasp-crs/rules/zz-nextcloud.conf &&
      echo 'SecRequestBodyLimit 536870912'   >> /etc/modsecurity.d/owasp-crs/rules/zz-nextcloud.conf &&
+     envsubst < /etc/nginx/templates/modsecurity.d/setup.conf.template > /etc/modsecurity.d/setup.conf &&
+     envsubst < /etc/nginx/templates/modsecurity.d/modsecurity-override.conf.template > /etc/modsecurity.d/modsecurity-override.conf &&
      nginx -g 'daemon off;'"
     links:
      - nextcloud
