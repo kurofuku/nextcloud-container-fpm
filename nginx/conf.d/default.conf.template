@@ -7,7 +7,7 @@ server {
 
 	fastcgi_hide_header X-Powered-By;
 
-	root ${NGINX_ROOT};
+	root ${CONTAINER_WEBROOT_DIR};
 
 	location ~ /.well-known {
 		allow all;
