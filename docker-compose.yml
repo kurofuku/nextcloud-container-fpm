@@ -102,7 +102,7 @@ services:
      - NEXTCLOUD_PROJECT_NAME=nextcloud-container-fpm
 
   db:
-    image: jsurf/rpi-mariadb:latest
+    image: mariadb:latest
     restart: always
     env_file: ./.env
     volumes:
