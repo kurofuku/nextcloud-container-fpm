@@ -1,4 +1,4 @@
-FROM		php:8.1-fpm-buster
+FROM		php:fpm
 
 ARG			NGINX_USER
 ARG			NGINX_GROUP
@@ -26,9 +26,9 @@ RUN			\
 			docker-php-ext-enable zip xml mbstring curl gd pdo_mysql intl gmp exif sysvsem && \
 			# Install library for Gmail
 			apt -y install python3-pip && \
-			pip3 install google-api-python-client google-auth-oauthlib && \
+			apt -y install python3-googleapi python3-google-auth-oauthlib && \
 			# Install Imagick
-			pecl install imagick && \
+			yes '' | pecl install imagick && \
 			echo "extension=imagick.so" > ${PHP_INI_DIR}/conf.d/imagick.ini && \
 			# Install opcache/apcu
 			docker-php-ext-install opcache bcmath && \
