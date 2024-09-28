@@ -28,8 +28,10 @@ RUN			\
 			apt -y install python3-pip && \
 			apt -y install python3-googleapi python3-google-auth-oauthlib && \
 			# Install Imagick
-			yes '' | pecl install imagick && \
-			echo "extension=imagick.so" > ${PHP_INI_DIR}/conf.d/imagick.ini && \
+			mkdir -p /usr/src/php/ext/imagick && \
+			curl -fsSL https://github.com/Imagick/imagick/archive/refs/tags/3.7.0.tar.gz | tar xvz -C "/usr/src/php/ext/imagick" --strip 1 && \
+			docker-php-ext-install imagick && \
+			docker-php-ext-enable imagick && \
 			# Install opcache/apcu
 			docker-php-ext-install opcache bcmath && \
 			docker-php-ext-enable opcache bcmath && \
