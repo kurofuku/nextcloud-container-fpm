@@ -1,4 +1,4 @@
-FROM		php:fpm
+FROM		php:8.3-fpm
 
 ARG			NGINX_USER
 ARG			NGINX_GROUP
