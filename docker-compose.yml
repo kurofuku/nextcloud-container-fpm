@@ -1,4 +1,4 @@
-version: '3.1'
+version: '3.7'
 
 services:
 
@@ -14,6 +14,7 @@ services:
      - $HOST_WEBROOT_DIR:$CONTAINER_WEBROOT_DIR
      - $HOST_NEXTCLOUD_DATA_DIR:$CONTAINER_NEXTCLOUD_DATA_DIR
      - nextcloud_var_run:/var/run
+    user: root
     tmpfs:
      - /var/cache/nginx/fastcgi_cache
      - /var/cache/nginx/fastcgi_temp
@@ -95,6 +96,7 @@ services:
     links:
      - nextcloud
     volumes:
+     - $HOST_WEBROOT_DIR:$CONTAINER_WEBROOT_DIR
      - /var/run/docker.sock:/var/run/docker.sock:ro
      - /etc/localtime:/etc/localtime:ro
     environment:
